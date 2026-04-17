@@ -274,26 +274,20 @@ return array(
  * @return array<string, array<string, string>>
  */
 private function build_window_dates( DateTimeImmutable $last_use, array $window ) {
-$locale = get_locale();
-if ( empty( $locale ) ) {
-$locale = 'es_ES';
-}
+		return array(
+			'optimistic'   => $this->format_result_date( $last_use, $window['optimistic'] ),
+			'probable'     => $this->format_result_date( $last_use, $window['probable'] ),
+			'conservative' => $this->format_result_date( $last_use, $window['conservative'] ),
+		);
+	}
 
-return array(
-'optimistic'   => $this->format_result_date( $last_use, $window['optimistic'], $locale ),
-'probable'     => $this->format_result_date( $last_use, $window['probable'], $locale ),
-'conservative' => $this->format_result_date( $last_use, $window['conservative'], $locale ),
-);
-}
-
-/**
- * @param DateTimeImmutable $base_date
- * @param float             $days
- * @param string            $locale
- *
- * @return array<string, string>
- */
-private function format_result_date( DateTimeImmutable $base_date, $days, $locale ) {
+	/**
+	 * @param DateTimeImmutable $base_date
+	 * @param float             $days
+	 *
+	 * @return array<string, string>
+	 */
+	private function format_result_date( DateTimeImmutable $base_date, $days ) {
 $target = $base_date->modify( '+' . (int) ceil( $days ) . ' days' );
 
 return array(

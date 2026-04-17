@@ -21,15 +21,22 @@ const fieldsetsByStep = [
 [],
 ];
 
-const showErrors = (messages) => {
-if (!messages || !messages.length) {
-errorsBox.hidden = true;
-errorsBox.innerHTML = '';
-return;
-}
-errorsBox.hidden = false;
-errorsBox.innerHTML = `<ul>${messages.map((msg) => `<li>${msg}</li>`).join('')}</ul>`;
-};
+	const showErrors = (messages) => {
+		if (!messages || !messages.length) {
+			errorsBox.hidden = true;
+			errorsBox.textContent = '';
+			return;
+		}
+		errorsBox.hidden = false;
+		const list = document.createElement('ul');
+		messages.forEach((message) => {
+			const item = document.createElement('li');
+			item.textContent = String(message);
+			list.appendChild(item);
+		});
+		errorsBox.textContent = '';
+		errorsBox.appendChild(list);
+	};
 
 const setStep = (index) => {
 currentStep = Math.max(0, Math.min(index, steps.length - 1));
@@ -127,22 +134,45 @@ wrap.appendChild(ics);
 return wrap;
 };
 
-const renderCard = (data, testKey) => {
-const card = document.createElement('article');
-card.className = 'thc-result-card';
-card.innerHTML = `
-<h4>${data.label}</h4>
-<p class="thc-result-card__range">${data.window_readable}</p>
-<ul class="thc-result-card__dates">
-<li><strong>Optimista:</strong> ${data.dates.optimistic.label}</li>
-<li><strong>Probable:</strong> ${data.dates.probable.label}</li>
-<li><strong>Conservadora:</strong> ${data.dates.conservative.label}</li>
-</ul>
-<p class="thc-result-card__target">Fecha estimada (${testKey}): <strong>${data.dates.conservative.label}</strong></p>
-`;
-card.appendChild(makeCalendarButtons(data.calendar));
-return card;
-};
+	const renderCard = (data, testKey) => {
+		const card = document.createElement('article');
+		card.className = 'thc-result-card';
+		const title = document.createElement('h4');
+		title.textContent = String(data.label || '');
+		card.appendChild(title);
+
+		const range = document.createElement('p');
+		range.className = 'thc-result-card__range';
+		range.textContent = String(data.window_readable || '');
+		card.appendChild(range);
+
+		const list = document.createElement('ul');
+		list.className = 'thc-result-card__dates';
+		[
+			['Optimista', data?.dates?.optimistic?.label],
+			['Probable', data?.dates?.probable?.label],
+			['Conservadora', data?.dates?.conservative?.label],
+		].forEach(([label, dateLabel]) => {
+			const li = document.createElement('li');
+			const strong = document.createElement('strong');
+			strong.textContent = `${label}: `;
+			li.appendChild(strong);
+			li.appendChild(document.createTextNode(String(dateLabel || '')));
+			list.appendChild(li);
+		});
+		card.appendChild(list);
+
+		const target = document.createElement('p');
+		target.className = 'thc-result-card__target';
+		target.appendChild(document.createTextNode(`Fecha estimada (${testKey}): `));
+		const strong = document.createElement('strong');
+		strong.textContent = String(data?.dates?.conservative?.label || '');
+		target.appendChild(strong);
+		card.appendChild(target);
+
+		card.appendChild(makeCalendarButtons(data.calendar));
+		return card;
+	};
 
 const renderResults = (payload) => {
 resultsBox.hidden = false;
@@ -159,16 +189,22 @@ cards.appendChild(renderCard(payload.urine, 'orina'));
 cards.appendChild(renderCard(payload.blood, 'sangre'));
 resultsBox.appendChild(cards);
 
-if (payload.influences?.length) {
-const influences = document.createElement('div');
-influences.className = 'thc-detox-influences';
-influences.innerHTML = `
-<h4>Factores con más impacto</h4>
-<ul>${payload.influences.map((line) => `<li>${line}</li>`).join('')}</ul>
-`;
-resultsBox.appendChild(influences);
-}
-};
+		if (payload.influences?.length) {
+			const influences = document.createElement('div');
+			influences.className = 'thc-detox-influences';
+			const title = document.createElement('h4');
+			title.textContent = 'Factores con más impacto';
+			influences.appendChild(title);
+			const list = document.createElement('ul');
+			payload.influences.forEach((line) => {
+				const li = document.createElement('li');
+				li.textContent = String(line);
+				list.appendChild(li);
+			});
+			influences.appendChild(list);
+			resultsBox.appendChild(influences);
+		}
+	};
 
 nextBtn.addEventListener('click', () => {
 if (!validateStep()) {
