@@ -1,0 +1,239 @@
+.thc-detox-calculator {
+--thc-bg: #0f1221;
+--thc-card: #1a1f36;
+--thc-soft: #252c4a;
+--thc-text: #eef2ff;
+--thc-muted: #b8c1ff;
+--thc-primary: #6f7fff;
+--thc-accent: #16c79a;
+--thc-danger: #ff6b81;
+max-width: 920px;
+margin: 2rem auto;
+padding: 1.5rem;
+border-radius: 20px;
+background: linear-gradient(165deg, #0d1120, #141933 55%, #1f2451);
+color: var(--thc-text);
+box-shadow: 0 30px 70px rgba(5, 8, 20, 0.4);
+}
+
+.thc-detox-calculator h2,
+.thc-detox-calculator h3,
+.thc-detox-calculator h4 {
+margin-top: 0;
+}
+
+.thc-detox-calculator__header p {
+color: var(--thc-muted);
+}
+
+.thc-detox-calculator__alert {
+margin: 1rem 0;
+padding: 0.85rem 1rem;
+border-radius: 12px;
+font-size: 0.95rem;
+line-height: 1.5;
+}
+
+.thc-detox-calculator__alert--disclaimer {
+background: rgba(255, 107, 129, 0.16);
+border: 1px solid rgba(255, 107, 129, 0.35);
+}
+
+.thc-detox-calculator__alert--soft {
+background: rgba(111, 127, 255, 0.15);
+border: 1px solid rgba(111, 127, 255, 0.4);
+}
+
+.thc-detox-calculator__errors {
+margin: 0.5rem 0 1rem;
+padding: 0.75rem 1rem;
+background: rgba(255, 107, 129, 0.18);
+border: 1px solid rgba(255, 107, 129, 0.45);
+border-radius: 12px;
+}
+
+.thc-detox-step {
+display: none;
+padding: 1.1rem;
+border: 1px solid rgba(184, 193, 255, 0.25);
+border-radius: 16px;
+background: rgba(26, 31, 54, 0.75);
+backdrop-filter: blur(2px);
+}
+
+.thc-detox-step.is-active {
+display: block;
+animation: thcFade 220ms ease;
+}
+
+.thc-detox-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 1rem;
+}
+
+.thc-detox-inline {
+display: grid;
+grid-template-columns: 2fr 1fr;
+gap: 0.75rem;
+}
+
+.thc-detox-calculator label span,
+.thc-detox-calculator legend {
+display: block;
+font-weight: 600;
+margin-bottom: 0.45rem;
+}
+
+.thc-detox-calculator input,
+.thc-detox-calculator select {
+width: 100%;
+padding: 0.7rem 0.75rem;
+border-radius: 10px;
+border: 1px solid rgba(184, 193, 255, 0.35);
+background: rgba(37, 44, 74, 0.9);
+color: var(--thc-text);
+}
+
+.thc-chip-group {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+gap: 0.5rem;
+margin-top: 0.45rem;
+}
+
+.thc-chip {
+position: relative;
+cursor: pointer;
+}
+
+.thc-chip input {
+position: absolute;
+opacity: 0;
+pointer-events: none;
+}
+
+.thc-chip span {
+display: block;
+padding: 0.65rem 0.75rem;
+border: 1px solid rgba(184, 193, 255, 0.25);
+border-radius: 999px;
+background: rgba(37, 44, 74, 0.6);
+text-align: center;
+font-size: 0.9rem;
+transition: all 0.2s ease;
+}
+
+.thc-chip input:checked + span {
+background: rgba(22, 199, 154, 0.2);
+border-color: rgba(22, 199, 154, 0.8);
+color: #d6fff3;
+}
+
+.thc-detox-calculator__footer {
+display: flex;
+flex-wrap: wrap;
+gap: 0.6rem;
+margin-top: 1rem;
+}
+
+.thc-btn {
+appearance: none;
+border: 0;
+border-radius: 999px;
+padding: 0.65rem 1.05rem;
+font-weight: 600;
+cursor: pointer;
+background: var(--thc-primary);
+color: #fff;
+text-decoration: none;
+transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.thc-btn:hover {
+transform: translateY(-1px);
+filter: brightness(1.06);
+}
+
+.thc-btn--ghost {
+background: transparent;
+border: 1px solid rgba(184, 193, 255, 0.35);
+color: var(--thc-text);
+}
+
+.thc-btn--accent {
+background: var(--thc-accent);
+color: #0e1822;
+}
+
+.thc-btn--small {
+font-size: 0.85rem;
+padding: 0.5rem 0.75rem;
+}
+
+.thc-results-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 1rem;
+}
+
+.thc-result-card {
+padding: 1rem;
+border-radius: 14px;
+background: rgba(25, 31, 58, 0.95);
+border: 1px solid rgba(184, 193, 255, 0.28);
+}
+
+.thc-result-card__range,
+.thc-result-card__target {
+color: var(--thc-muted);
+}
+
+.thc-result-card__dates {
+list-style: none;
+padding: 0;
+margin: 0.6rem 0;
+display: grid;
+gap: 0.3rem;
+}
+
+.thc-card__actions {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-top: 0.9rem;
+}
+
+.thc-detox-influences {
+margin-top: 1rem;
+padding: 1rem;
+border-radius: 14px;
+background: rgba(22, 199, 154, 0.08);
+border: 1px solid rgba(22, 199, 154, 0.3);
+}
+
+.thc-detox-influences ul {
+margin: 0.5rem 0 0;
+padding-left: 1.1rem;
+}
+
+@keyframes thcFade {
+from {
+opacity: 0;
+transform: translateY(6px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@media (max-width: 600px) {
+.thc-detox-calculator {
+padding: 1rem;
+}
+
+.thc-detox-inline {
+grid-template-columns: 1fr;
+}
+}
