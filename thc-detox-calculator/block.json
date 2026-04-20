@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "thc-detox/calculator",
+  "version": "1.0.0",
+  "title": "THC Detox Calculator",
+  "category": "widgets",
+  "icon": "calculator",
+  "description": "Calculadora THC como bloque dinámico para WordPress.",
+  "textdomain": "thc-detox-calculator",
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Calculadora de desintoxicación THC"
+    },
+    "description": {
+      "type": "string",
+      "default": "Estima tu ventana orientativa para test de orina y sangre con un enfoque conservador."
+    },
+    "disclaimer": {
+      "type": "string",
+      "default": "Esta herramienta ofrece una estimación aproximada y no garantiza un resultado negativo en un test de drogas."
+    },
+    "previousButtonLabel": {
+      "type": "string",
+      "default": "Anterior"
+    },
+    "nextButtonLabel": {
+      "type": "string",
+      "default": "Siguiente"
+    },
+    "submitButtonLabel": {
+      "type": "string",
+      "default": "Calcular ventana estimada"
+    },
+    "submitLoadingLabel": {
+      "type": "string",
+      "default": "Calculando..."
+    },
+    "maxWidth": {
+      "type": "number",
+      "default": 920
+    },
+    "fontSize": {
+      "type": "number",
+      "default": 1
+    },
+    "borderRadius": {
+      "type": "number",
+      "default": 20
+    },
+    "borderWidth": {
+      "type": "number",
+      "default": 0
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#141933"
+    },
+    "textColor": {
+      "type": "string",
+      "default": "#eef2ff"
+    },
+    "primaryColor": {
+      "type": "string",
+      "default": "#6f7fff"
+    },
+    "accentColor": {
+      "type": "string",
+      "default": "#16c79a"
+    },
+    "borderColor": {
+      "type": "string",
+      "default": "#252c4a"
+    }
+  },
+  "editorScript": "thc-detox-calculator-block-editor",
+  "style": "thc-detox-calculator",
+  "editorStyle": "thc-detox-calculator-block-editor-style"
+}

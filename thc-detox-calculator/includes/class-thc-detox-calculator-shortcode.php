@@ -29,6 +29,22 @@ $this->calendar  = $calendar;
  * @return string
  */
 public function render_shortcode() {
+return $this->render_calculator( array() );
+}
+
+/**
+ * @param array<string,mixed> $attributes
+ * @return string
+ */
+public function render_block( $attributes = array() ) {
+return $this->render_calculator( is_array( $attributes ) ? $attributes : array() );
+}
+
+/**
+ * @param array<string,mixed> $attributes
+ * @return string
+ */
+private function render_calculator( array $attributes ) {
 wp_enqueue_style( 'thc-detox-calculator' );
 wp_enqueue_script( 'thc-detox-calculator' );
 
@@ -41,10 +57,73 @@ array(
 )
 );
 
+$view_data = $this->build_view_data( $attributes );
+
 ob_start();
 require THC_DETOX_CALCULATOR_PATH . 'templates/calculator-form.php';
 
 return (string) ob_get_clean();
+}
+
+/**
+ * @param array<string,mixed> $attributes
+ * @return array<string,mixed>
+ */
+private function build_view_data( array $attributes ) {
+$default_data = array(
+'title'                => __( 'Calculadora de desintoxicación THC', 'thc-detox-calculator' ),
+'description'          => __( 'Estima tu ventana orientativa para test de orina y sangre con un enfoque conservador.', 'thc-detox-calculator' ),
+'disclaimer'           => __( 'Esta herramienta ofrece una estimación aproximada y no garantiza un resultado negativo en un test de drogas.', 'thc-detox-calculator' ),
+'previous_button'      => __( 'Anterior', 'thc-detox-calculator' ),
+'next_button'          => __( 'Siguiente', 'thc-detox-calculator' ),
+'submit_button'        => __( 'Calcular ventana estimada', 'thc-detox-calculator' ),
+'submit_loading'       => __( 'Calculando...', 'thc-detox-calculator' ),
+'max_width'            => 920,
+'font_size'            => 1,
+'border_radius'        => 20,
+'border_width'         => 0,
+'background_color'     => '#141933',
+'text_color'           => '#eef2ff',
+'primary_color'        => '#6f7fff',
+'accent_color'         => '#16c79a',
+'border_color'         => '#252c4a',
+'inline_style'         => '',
+);
+
+$sanitized_data = array(
+'title'           => sanitize_text_field( isset( $attributes['title'] ) ? $attributes['title'] : $default_data['title'] ),
+'description'     => sanitize_text_field( isset( $attributes['description'] ) ? $attributes['description'] : $default_data['description'] ),
+'disclaimer'      => sanitize_text_field( isset( $attributes['disclaimer'] ) ? $attributes['disclaimer'] : $default_data['disclaimer'] ),
+'previous_button' => sanitize_text_field( isset( $attributes['previousButtonLabel'] ) ? $attributes['previousButtonLabel'] : $default_data['previous_button'] ),
+'next_button'     => sanitize_text_field( isset( $attributes['nextButtonLabel'] ) ? $attributes['nextButtonLabel'] : $default_data['next_button'] ),
+'submit_button'   => sanitize_text_field( isset( $attributes['submitButtonLabel'] ) ? $attributes['submitButtonLabel'] : $default_data['submit_button'] ),
+'submit_loading'  => sanitize_text_field( isset( $attributes['submitLoadingLabel'] ) ? $attributes['submitLoadingLabel'] : $default_data['submit_loading'] ),
+);
+
+$sanitized_data['max_width'] = max( 480, min( 1400, absint( isset( $attributes['maxWidth'] ) ? $attributes['maxWidth'] : $default_data['max_width'] ) ) );
+$sanitized_data['font_size'] = max( 0.8, min( 1.4, (float) ( isset( $attributes['fontSize'] ) ? $attributes['fontSize'] : $default_data['font_size'] ) ) );
+$sanitized_data['border_radius'] = max( 0, min( 48, absint( isset( $attributes['borderRadius'] ) ? $attributes['borderRadius'] : $default_data['border_radius'] ) ) );
+$sanitized_data['border_width'] = max( 0, min( 12, absint( isset( $attributes['borderWidth'] ) ? $attributes['borderWidth'] : $default_data['border_width'] ) ) );
+$sanitized_data['background_color'] = sanitize_hex_color( isset( $attributes['backgroundColor'] ) ? $attributes['backgroundColor'] : '' ) ?: $default_data['background_color'];
+$sanitized_data['text_color'] = sanitize_hex_color( isset( $attributes['textColor'] ) ? $attributes['textColor'] : '' ) ?: $default_data['text_color'];
+$sanitized_data['primary_color'] = sanitize_hex_color( isset( $attributes['primaryColor'] ) ? $attributes['primaryColor'] : '' ) ?: $default_data['primary_color'];
+$sanitized_data['accent_color'] = sanitize_hex_color( isset( $attributes['accentColor'] ) ? $attributes['accentColor'] : '' ) ?: $default_data['accent_color'];
+$sanitized_data['border_color'] = sanitize_hex_color( isset( $attributes['borderColor'] ) ? $attributes['borderColor'] : '' ) ?: $default_data['border_color'];
+
+$sanitized_data['inline_style'] = sprintf(
+'--thc-bg:%1$s;--thc-text:%2$s;--thc-primary:%3$s;--thc-accent:%4$s;--thc-border-color:%5$s;--thc-border-width:%6$dpx;--thc-radius:%7$dpx;--thc-max-width:%8$dpx;--thc-font-size:%9$srem;',
+$sanitized_data['background_color'],
+$sanitized_data['text_color'],
+$sanitized_data['primary_color'],
+$sanitized_data['accent_color'],
+$sanitized_data['border_color'],
+$sanitized_data['border_width'],
+$sanitized_data['border_radius'],
+$sanitized_data['max_width'],
+rtrim( rtrim( number_format( $sanitized_data['font_size'], 2, '.', '' ), '0' ), '.' )
+);
+
+return $sanitized_data;
 }
 
 /**

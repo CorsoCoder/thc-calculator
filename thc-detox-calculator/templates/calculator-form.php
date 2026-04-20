@@ -2,16 +2,18 @@
 if ( ! defined( 'ABSPATH' ) ) {
 exit;
 }
+
+$view_data = isset( $view_data ) && is_array( $view_data ) ? $view_data : array();
 ?>
-<div class="thc-detox-calculator" data-thc-detox-calculator>
+<div class="thc-detox-calculator" data-thc-detox-calculator style="<?php echo esc_attr( isset( $view_data['inline_style'] ) ? $view_data['inline_style'] : '' ); ?>">
 <form class="thc-detox-calculator__form" novalidate>
 <div class="thc-detox-calculator__header">
-<h2><?php echo esc_html__( 'Calculadora de desintoxicación THC', 'thc-detox-calculator' ); ?></h2>
-<p><?php echo esc_html__( 'Estima tu ventana orientativa para test de orina y sangre con un enfoque conservador.', 'thc-detox-calculator' ); ?></p>
+<h2><?php echo esc_html( isset( $view_data['title'] ) ? $view_data['title'] : '' ); ?></h2>
+<p><?php echo esc_html( isset( $view_data['description'] ) ? $view_data['description'] : '' ); ?></p>
 </div>
 
 <div class="thc-detox-calculator__alert thc-detox-calculator__alert--disclaimer" role="note">
-<?php echo esc_html__( 'Esta herramienta ofrece una estimación aproximada y no garantiza un resultado negativo en un test de drogas.', 'thc-detox-calculator' ); ?>
+<?php echo esc_html( isset( $view_data['disclaimer'] ) ? $view_data['disclaimer'] : '' ); ?>
 </div>
 
 <div class="thc-detox-calculator__errors" role="alert" aria-live="polite" hidden></div>
@@ -141,9 +143,9 @@ exit;
 </section>
 
 <div class="thc-detox-calculator__footer">
-<button type="button" class="thc-btn thc-btn--ghost" data-prev><?php echo esc_html__( 'Anterior', 'thc-detox-calculator' ); ?></button>
-<button type="button" class="thc-btn" data-next><?php echo esc_html__( 'Siguiente', 'thc-detox-calculator' ); ?></button>
-<button type="submit" class="thc-btn thc-btn--accent" data-submit hidden><?php echo esc_html__( 'Calcular ventana estimada', 'thc-detox-calculator' ); ?></button>
+<button type="button" class="thc-btn thc-btn--ghost" data-prev><?php echo esc_html( isset( $view_data['previous_button'] ) ? $view_data['previous_button'] : '' ); ?></button>
+<button type="button" class="thc-btn" data-next><?php echo esc_html( isset( $view_data['next_button'] ) ? $view_data['next_button'] : '' ); ?></button>
+<button type="submit" class="thc-btn thc-btn--accent" data-submit data-loading-text="<?php echo esc_attr( isset( $view_data['submit_loading'] ) ? $view_data['submit_loading'] : '' ); ?>" data-default-text="<?php echo esc_attr( isset( $view_data['submit_button'] ) ? $view_data['submit_button'] : '' ); ?>" hidden><?php echo esc_html( isset( $view_data['submit_button'] ) ? $view_data['submit_button'] : '' ); ?></button>
 </div>
 </form>
 </div>

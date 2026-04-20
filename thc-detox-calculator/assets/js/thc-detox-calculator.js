@@ -241,7 +241,7 @@ return;
 }
 
 submitBtn.disabled = true;
-submitBtn.textContent = 'Calculando...';
+submitBtn.textContent = String(submitBtn.dataset.loadingText || 'Calculando...');
 showErrors([]);
 
 try {
@@ -264,7 +264,7 @@ setStep(steps.length - 1);
 showErrors(['Se produjo un error al calcular. Inténtalo de nuevo.']);
 } finally {
 submitBtn.disabled = false;
-submitBtn.textContent = 'Calcular ventana estimada';
+submitBtn.textContent = String(submitBtn.dataset.defaultText || 'Calcular ventana estimada');
 }
 });
 

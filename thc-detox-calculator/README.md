@@ -29,7 +29,9 @@ thc-detox-calculator/
 1. Copia la carpeta `thc-detox-calculator` en `wp-content/plugins/`.
 2. Entra a **WP Admin → Plugins**.
 3. Activa **THC Detox Calculator**.
-4. Inserta el shortcode en una página o entrada:
+4. Inserta el bloque **THC Detox Calculator** desde el editor de bloques.
+5. (Opcional) Ajusta textos y estilos (tamaños, colores, bordes) desde la barra lateral del bloque.
+6. Si prefieres, también puedes usar el shortcode en una página o entrada:
 
 ```text
 [thc_detox_calculator]
