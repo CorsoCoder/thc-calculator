@@ -82,7 +82,7 @@ $default_data = array(
 'font_size'            => 1,
 'border_radius'        => 20,
 'border_width'         => 0,
-'background_color'     => '#141933',
+'background_color'     => '',
 'text_color'           => '#eef2ff',
 'primary_color'        => '#6f7fff',
 'accent_color'         => '#16c79a',
@@ -110,18 +110,30 @@ $sanitized_data['primary_color'] = sanitize_hex_color( isset( $attributes['prima
 $sanitized_data['accent_color'] = sanitize_hex_color( isset( $attributes['accentColor'] ) ? $attributes['accentColor'] : '' ) ?: $default_data['accent_color'];
 $sanitized_data['border_color'] = sanitize_hex_color( isset( $attributes['borderColor'] ) ? $attributes['borderColor'] : '' ) ?: $default_data['border_color'];
 
-$sanitized_data['inline_style'] = sprintf(
-'--thc-bg:%1$s;--thc-text:%2$s;--thc-primary:%3$s;--thc-accent:%4$s;--thc-border-color:%5$s;--thc-border-width:%6$dpx;--thc-radius:%7$dpx;--thc-max-width:%8$dpx;--thc-font-size:%9$srem;',
-$sanitized_data['background_color'],
-$sanitized_data['text_color'],
-$sanitized_data['primary_color'],
-$sanitized_data['accent_color'],
-$sanitized_data['border_color'],
-$sanitized_data['border_width'],
-$sanitized_data['border_radius'],
-$sanitized_data['max_width'],
-rtrim( rtrim( number_format( $sanitized_data['font_size'], 2, '.', '' ), '0' ), '.' )
+$font_size_string = number_format( $sanitized_data['font_size'], 2, '.', '' );
+$font_size_string = rtrim( rtrim( $font_size_string, '0' ), '.' );
+
+$style_vars = array(
+'--thc-text'         => $sanitized_data['text_color'],
+'--thc-primary'      => $sanitized_data['primary_color'],
+'--thc-accent'       => $sanitized_data['accent_color'],
+'--thc-border-color' => $sanitized_data['border_color'],
+'--thc-border-width' => $sanitized_data['border_width'] . 'px',
+'--thc-radius'       => $sanitized_data['border_radius'] . 'px',
+'--thc-max-width'    => $sanitized_data['max_width'] . 'px',
+'--thc-font-size'    => $font_size_string . 'rem',
 );
+
+if ( ! empty( $sanitized_data['background_color'] ) ) {
+$style_vars['--thc-bg'] = $sanitized_data['background_color'];
+}
+
+$inline_style = '';
+foreach ( $style_vars as $key => $value ) {
+$inline_style .= $key . ':' . $value . ';';
+}
+
+$sanitized_data['inline_style'] = $inline_style;
 
 return $sanitized_data;
 }

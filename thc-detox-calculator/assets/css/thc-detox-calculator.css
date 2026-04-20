@@ -1,5 +1,5 @@
 .thc-detox-calculator {
---thc-bg: #141933;
+--thc-bg: linear-gradient(165deg, #0d1120, #141933 55%, #1f2451);
 --thc-card: #1a1f36;
 --thc-soft: #252c4a;
 --thc-text: #eef2ff;

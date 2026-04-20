@@ -58,7 +58,7 @@
     },
     "backgroundColor": {
       "type": "string",
-      "default": "#141933"
+      "default": ""
     },
     "textColor": {
       "type": "string",
