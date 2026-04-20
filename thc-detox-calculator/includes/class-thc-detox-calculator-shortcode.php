@@ -26,6 +26,31 @@ $this->calendar  = $calendar;
 }
 
 /**
+ * @return array<string,mixed>
+ */
+public static function get_default_view_data() {
+return array(
+'title'           => __( 'Calculadora de desintoxicación THC', 'thc-detox-calculator' ),
+'description'     => __( 'Estima tu ventana orientativa para test de orina y sangre con un enfoque conservador.', 'thc-detox-calculator' ),
+'disclaimer'      => __( 'Esta herramienta ofrece una estimación aproximada y no garantiza un resultado negativo en un test de drogas.', 'thc-detox-calculator' ),
+'previous_button' => __( 'Anterior', 'thc-detox-calculator' ),
+'next_button'     => __( 'Siguiente', 'thc-detox-calculator' ),
+'submit_button'   => __( 'Calcular ventana estimada', 'thc-detox-calculator' ),
+'submit_loading'  => __( 'Calculando...', 'thc-detox-calculator' ),
+'max_width'       => 920,
+'font_size'       => 1,
+'border_radius'   => 20,
+'border_width'    => 0,
+'background_color' => '',
+'text_color'      => '#eef2ff',
+'primary_color'   => '#6f7fff',
+'accent_color'    => '#16c79a',
+'border_color'    => '#252c4a',
+'inline_style'    => '',
+);
+}
+
+/**
  * @return string
  */
 public function render_shortcode() {
@@ -70,25 +95,7 @@ return (string) ob_get_clean();
  * @return array<string,mixed>
  */
 private function build_view_data( array $attributes ) {
-$default_data = array(
-'title'                => __( 'Calculadora de desintoxicación THC', 'thc-detox-calculator' ),
-'description'          => __( 'Estima tu ventana orientativa para test de orina y sangre con un enfoque conservador.', 'thc-detox-calculator' ),
-'disclaimer'           => __( 'Esta herramienta ofrece una estimación aproximada y no garantiza un resultado negativo en un test de drogas.', 'thc-detox-calculator' ),
-'previous_button'      => __( 'Anterior', 'thc-detox-calculator' ),
-'next_button'          => __( 'Siguiente', 'thc-detox-calculator' ),
-'submit_button'        => __( 'Calcular ventana estimada', 'thc-detox-calculator' ),
-'submit_loading'       => __( 'Calculando...', 'thc-detox-calculator' ),
-'max_width'            => 920,
-'font_size'            => 1,
-'border_radius'        => 20,
-'border_width'         => 0,
-'background_color'     => '',
-'text_color'           => '#eef2ff',
-'primary_color'        => '#6f7fff',
-'accent_color'         => '#16c79a',
-'border_color'         => '#252c4a',
-'inline_style'         => '',
-);
+$default_data = self::get_default_view_data();
 
 $sanitized_data = array(
 'title'           => sanitize_text_field( isset( $attributes['title'] ) ? $attributes['title'] : $default_data['title'] ),
@@ -111,7 +118,7 @@ $sanitized_data['accent_color'] = sanitize_hex_color( isset( $attributes['accent
 $sanitized_data['border_color'] = sanitize_hex_color( isset( $attributes['borderColor'] ) ? $attributes['borderColor'] : '' ) ?: $default_data['border_color'];
 
 $font_size_string = number_format( $sanitized_data['font_size'], 2, '.', '' );
-$font_size_string = rtrim( rtrim( $font_size_string, '0' ), '.' );
+$font_size_formatted = rtrim( rtrim( $font_size_string, '0' ), '.' );
 
 $style_vars = array(
 '--thc-text'         => $sanitized_data['text_color'],
@@ -121,7 +128,7 @@ $style_vars = array(
 '--thc-border-width' => $sanitized_data['border_width'] . 'px',
 '--thc-radius'       => $sanitized_data['border_radius'] . 'px',
 '--thc-max-width'    => $sanitized_data['max_width'] . 'px',
-'--thc-font-size'    => $font_size_string . 'rem',
+'--thc-font-size'    => $font_size_formatted . 'rem',
 );
 
 if ( ! empty( $sanitized_data['background_color'] ) ) {
