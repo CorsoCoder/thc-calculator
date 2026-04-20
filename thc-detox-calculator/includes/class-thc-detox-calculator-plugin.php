@@ -31,7 +31,8 @@ private function __construct() {
 $this->shortcode = new THC_Detox_Calculator_Shortcode( new THC_Detox_Calculator_Estimator(), new THC_Detox_Calculator_Calendar() );
 
 add_action( 'init', array( $this, 'register_shortcode' ) );
-add_action( 'wp_enqueue_scripts', array( $this, 'register_assets' ) );
+add_action( 'init', array( $this, 'register_assets' ) );
+add_action( 'init', array( $this, 'register_block' ) );
 add_action( 'wp_ajax_thc_detox_calculate', array( $this->shortcode, 'handle_ajax_calculation' ) );
 add_action( 'wp_ajax_nopriv_thc_detox_calculate', array( $this->shortcode, 'handle_ajax_calculation' ) );
 }
@@ -64,6 +65,35 @@ THC_DETOX_CALCULATOR_URL . 'assets/js/thc-detox-calculator.js',
 array(),
 THC_DETOX_CALCULATOR_VERSION,
 true
+);
+
+wp_register_script(
+'thc-detox-calculator-block-editor',
+THC_DETOX_CALCULATOR_URL . 'assets/js/thc-detox-calculator-block.js',
+array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-block-editor', 'wp-i18n', 'wp-server-side-render' ),
+THC_DETOX_CALCULATOR_VERSION,
+true
+);
+
+wp_register_style(
+'thc-detox-calculator-block-editor-style',
+THC_DETOX_CALCULATOR_URL . 'assets/css/thc-detox-calculator-block-editor.css',
+array( 'wp-edit-blocks' ),
+THC_DETOX_CALCULATOR_VERSION
+);
+}
+
+/**
+ * Registra bloque dinámico de Gutenberg.
+ *
+ * @return void
+ */
+public function register_block() {
+register_block_type(
+THC_DETOX_CALCULATOR_PATH . 'block.json',
+array(
+'render_callback' => array( $this->shortcode, 'render_block' ),
+)
 );
 }
 }

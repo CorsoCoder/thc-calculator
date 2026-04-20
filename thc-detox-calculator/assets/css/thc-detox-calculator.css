@@ -1,5 +1,5 @@
 .thc-detox-calculator {
---thc-bg: #0f1221;
+--thc-bg: linear-gradient(165deg, #0d1120, #141933 55%, #1f2451);
 --thc-card: #1a1f36;
 --thc-soft: #252c4a;
 --thc-text: #eef2ff;
@@ -7,13 +7,20 @@
 --thc-primary: #6f7fff;
 --thc-accent: #16c79a;
 --thc-danger: #ff6b81;
-max-width: 920px;
+--thc-border-color: #252c4a;
+--thc-border-width: 0px;
+--thc-radius: 20px;
+--thc-max-width: 920px;
+--thc-font-size: 1rem;
+max-width: var(--thc-max-width);
 margin: 2rem auto;
 padding: 1.5rem;
-border-radius: 20px;
-background: linear-gradient(165deg, #0d1120, #141933 55%, #1f2451);
+border-radius: var(--thc-radius);
+border: var(--thc-border-width) solid var(--thc-border-color);
+background: var(--thc-bg);
 color: var(--thc-text);
 box-shadow: 0 30px 70px rgba(5, 8, 20, 0.4);
+font-size: var(--thc-font-size);
 }
 
 .thc-detox-calculator h2,
