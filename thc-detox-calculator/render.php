@@ -20,7 +20,28 @@ if ( $block_type && ! empty( $block_type->view_script_handles ) && is_array( $bl
 	}
 }
 
-$default_data = THC_Detox_Calculator_Shortcode::get_default_view_data();
+$default_data = array(
+	'title'            => __( 'Calculadora de desintoxicación THC', 'thc-detox-calculator' ),
+	'description'      => __( 'Estima tu ventana orientativa para test de orina y sangre con un enfoque conservador.', 'thc-detox-calculator' ),
+	'disclaimer'       => __( 'Esta herramienta ofrece una estimación aproximada y no garantiza un resultado negativo en un test de drogas.', 'thc-detox-calculator' ),
+	'previous_button'  => __( 'Anterior', 'thc-detox-calculator' ),
+	'next_button'      => __( 'Siguiente', 'thc-detox-calculator' ),
+	'submit_button'    => __( 'Calcular ventana estimada', 'thc-detox-calculator' ),
+	'submit_loading'   => __( 'Calculando...', 'thc-detox-calculator' ),
+	'max_width'        => 920,
+	'font_size'        => 1,
+	'border_radius'    => 20,
+	'border_width'     => 0,
+	'background_color' => '',
+	'text_color'       => '#eef2ff',
+	'primary_color'    => '#6f7fff',
+	'accent_color'     => '#16c79a',
+	'border_color'     => '#252c4a',
+);
+
+if ( class_exists( 'THC_Detox_Calculator_Shortcode' ) && method_exists( 'THC_Detox_Calculator_Shortcode', 'get_default_view_data' ) ) {
+	$default_data = THC_Detox_Calculator_Shortcode::get_default_view_data();
+}
 
 $view_data = array(
 	'title'           => sanitize_text_field( isset( $attributes['title'] ) ? $attributes['title'] : $default_data['title'] ),
