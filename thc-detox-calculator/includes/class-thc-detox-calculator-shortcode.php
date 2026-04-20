@@ -118,7 +118,8 @@ $sanitized_data['accent_color'] = sanitize_hex_color( isset( $attributes['accent
 $sanitized_data['border_color'] = sanitize_hex_color( isset( $attributes['borderColor'] ) ? $attributes['borderColor'] : '' ) ?: $default_data['border_color'];
 
 $font_size_string = number_format( $sanitized_data['font_size'], 2, '.', '' );
-$font_size_formatted = rtrim( rtrim( $font_size_string, '0' ), '.' );
+$font_size_formatted = preg_replace( '/\.?0+$/', '', $font_size_string );
+$font_size_formatted = '' === $font_size_formatted ? '1' : $font_size_formatted;
 
 $style_vars = array(
 '--thc-text'         => $sanitized_data['text_color'],

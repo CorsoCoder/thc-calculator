@@ -15,7 +15,7 @@
 			el( ColorPicker, {
 				color: value,
 				onChangeComplete: function( color ) {
-					onChange( color && color.hex ? color.hex : value );
+					onChange( color && color.hex ? color.hex : '' );
 				},
 				disableAlpha: true,
 			} )
