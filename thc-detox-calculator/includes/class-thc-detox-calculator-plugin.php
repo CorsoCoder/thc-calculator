@@ -88,12 +88,7 @@ THC_DETOX_CALCULATOR_VERSION
  *
  * @return void
  */
-public function register_block() {
-register_block_type(
-THC_DETOX_CALCULATOR_PATH . 'block.json',
-array(
-'render_callback' => array( $this->shortcode, 'render_block' ),
-)
-);
-}
+	public function register_block() {
+	register_block_type( THC_DETOX_CALCULATOR_PATH . 'block.json' );
+	}
 }
